@@ -1,0 +1,10 @@
+beautifulsoup4==4.12.2
+certifi==2023.7.22
+charset-normalizer==3.2.0
+dulwich==0.21.5
+idna==3.4
+PySocks==1.7.1
+requests==2.31.0
+socks==0
+soupsieve==2.4.1
+urllib3==2.0.4
