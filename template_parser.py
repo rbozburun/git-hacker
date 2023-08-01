@@ -8,7 +8,10 @@ class TemplateParser:
         self.data = None
         self.matcher_regex = None
         self.extractor_regex = None
+        self.matcher_regex_list = None
         self.match = None
+        self.match_as_list = []
+        self.type = None
 
         # Load the yaml data to the parser initially.
         self.load_data()
@@ -24,8 +27,17 @@ class TemplateParser:
             with open(self.template_file_path, 'r', encoding='utf-8') as file:
                 self.data = yaml.safe_load(file)
                 self.id = self.data.get('id')
-                self.matcher_regex = self.data.get('parser', {})["matcher"][0]["regex"][0]
-                self.extractor_regex = self.data.get('parser', {})["extractor"][0]["regex"][0]
+                self.type = self.data.get('info', {})["type"]
+                if self.id in ['interesting-files']:
+                    # This templates does not have a certain regex, they includes regex list.
+                    self.matcher_regex_list = self.data.get('parser', {})["matcher"][0]["regex"]
+                else:
+                    self.matcher_regex = self.data.get('parser', {})["matcher"][0]["regex"][0]
+                    try:
+                        self.extractor_regex = self.data.get('parser', {})["extractor"][0]["regex"][0]
+                    except KeyError:
+                        # If KeyError threw, the template does not have key
+                        pass
     
         except FileNotFoundError:
             print(f"Error: File '{self.file_path}' not found.")
@@ -38,11 +50,18 @@ class TemplateParser:
 
         match = re.search(regex, content)
         if match:
-            self.match = match.group()  # Store the matched text
+            # If there is a single regex, set match
+            if self.matcher_regex != None and self.matcher_regex_list == None:
+                self.match = match.group()  # Store the matched text
+
+            # If there is a regex list, update the match in each call    
+            elif self.matcher_regex == None and self.matcher_regex_list != None:
+                self.match_as_list = self.match_as_list + [match.group]
             return True
         else:
             self.match = None  # Reset the match variable if no match is found
             return False
+
 
     def extractor(self, regex, content):
         """Extracts data according to the regex in the target text"""

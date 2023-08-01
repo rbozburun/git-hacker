@@ -1,6 +1,7 @@
 id: jquery-version
 
 info:
+  type: content-checker
   name: JQuery Version Detection
   author: rbozburun
   description: Checks the version of JQuery
