@@ -45,7 +45,31 @@ options:
 
 ```bash
 python3 git_hacker.py http://localhost:8080 website --vuln
+...
+...
+[-] Fetching http://localhost:8080/.git/refs/remotes/origin/ [200]
+[-] Fetching http://localhost:8080/.git/logs/refs/remotes/ [200]
+[-] Already downloaded http://localhost:8080/.git/refs/remotes/origin/master
+[-] Fetching http://localhost:8080/.git/logs/refs/remotes/origin/ [200]
+[-] Already downloaded http://localhost:8080/.git/logs/refs/remotes/origin/master
+[-] Running git checkout .
+Updated 0 paths from the index
+[i] Fetch operation done. And .git file found successfully.
+----------------------------------------
+[i] Starting vulnerability scanning process...
+[-] Target: C:\Users\resul\OneDrive\Desktop\Projects\git-hacker\website
+[-] 2 template(s) using...
+<interesting-files>: Matched! Found file: <redacted>\git-hacker\website\.bash_history, used regex: \.bash_history$
+<interesting-files>: Matched! Found file: <redacted>\git-hacker\website\boot.log, used regex: \.log$
+<interesting-files>: Matched! Found file: <redacted>\git-hacker\website\boot.log, used regex: boot.log
+<file-content-version-parser>: Matched! Version identified: v3.7.0 - File: <redacted>\git-hacker\website\jquery.js  
+<interesting-files>: Matched! Found file: <redacted>\git-hacker\website\README.txt, used regex: \.txt$
+<file-content-version-parser>: Matched! Version identified:  1.2.3-alpha.something+meta-data - File: <redacted>\git-hacker\website\test2\alpha-version.txt
+<interesting-files>: Matched! Found file: <redacted>\git-hacker\website\test2\alpha-version.txt, used regex: \.txt$
+<file-content-version-parser>: Matched! Version identified:  1.2.3 - File: <redacted>\git-hacker\website\test2\version_test\version.yaml
+<interesting-files>: Matched! Found file: <redacted>\git-hacker\website\test2\version_test\version.yaml, used regex: \.yaml$
 ```
+
 
 
 ## Credits
