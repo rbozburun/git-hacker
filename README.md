@@ -70,6 +70,30 @@ Updated 0 paths from the index
 <interesting-files>: Matched! Found file: <redacted>\git-hacker\website\test2\version_test\version.yaml, used regex: \.yaml$
 ```
 
+## Adding new templates
+You can create your own templates according to the following YAML definiton.
+```yaml
+id: <template-id>
+
+info:
+  type: <content-checker or filename-checker>
+  name: <name>
+  author: <name>
+  description: <desc>
+  tags: <optional tags>
+
+parser:
+  matcher:
+    - type: regex
+      regex:
+        - <regex>
+
+  extractor:
+    - type: regex
+      name: <regex_name>
+      regex:
+        - <regex>
+```
 
 
 ## Credits
