@@ -28,8 +28,8 @@ class TemplateParser:
                 self.data = yaml.safe_load(file)
                 self.id = self.data.get('id')
                 self.type = self.data.get('info', {})["type"]
+                # This templates does not have a certain regex, they includes regex list.
                 if self.id in ['interesting-files']:
-                    # This templates does not have a certain regex, they includes regex list.
                     self.matcher_regex_list = self.data.get('parser', {})["matcher"][0]["regex"]
                 else:
                     self.matcher_regex = self.data.get('parser', {})["matcher"][0]["regex"][0]
@@ -67,6 +67,13 @@ class TemplateParser:
         """Extracts data according to the regex in the target text"""
         extracted_data = []
 
+        # If regex is none, this means the scanner not use a single regex, get the regex from self.matcher_regex_list[0]
+        if regex == 'None':
+            try:
+                regex =  self.matcher_regex_list[0]
+            except TypeError:
+                regex = self.matcher_regex
+        
         matches = re.findall(regex, content)
         if matches:
             extracted_data = [match[0] for match in matches]

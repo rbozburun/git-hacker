@@ -188,19 +188,20 @@ def analyzer(template, target_files):
         parser = TemplateParser(template)
         file_content = open(target_file, "r", encoding="latin-1").read()
 
-        # Parser using a single regex, not a regex list
-        if parser.matcher_regex != None and parser.matcher_regex_list == None:
-            if parser.type == "content-checker":
-                if parser.matcher(parser.matcher_regex, file_content):
-                    printf('<%s>: Matched! Version identified: %s \n', parser.id, parser.extractor(parser.extractor_regex, parser.match))
+        if parser.type == "content-checker":
+            if parser.matcher(parser.matcher_regex, file_content):
+                if parser.extractor_regex != "None":
+                    printf('<%s>: Matched! Version identified: %s - File: %s \n', parser.id, parser.extractor(parser.extractor_regex, parser.match), target_file)
+                else:
+                    parser.extractor_regex = parser.matcher_regex
+                    printf('<%s>: Matched! Version identified: %s - File: %s  \n', parser.id, parser.match, target_file)
         
-        # Parser using a regex list, not a single regex
-        elif parser.matcher_regex == None and parser.matcher_regex_list != None:
-            if parser.type == "filename-checker":
-                # Compare each regex with the target file
-                for regex in parser.matcher_regex_list:
-                    if parser.matcher(regex, target_file):
-                        printf('<%s>: Matched! Found file: %s, used regex: %s\n', parser.id, target_file, regex)
+        elif parser.type == "filename-checker":
+            # Compare each regex with the target file
+            for regex in parser.matcher_regex_list:
+                if parser.matcher(regex, target_file):
+                    printf('<%s>: Matched! Found file: %s, used regex: %s\n', parser.id, target_file, regex)
+                    
 
 
         
