@@ -30,8 +30,8 @@ def is_fetch_succesful(folder_path):
 
 def main():
     parser = argparse.ArgumentParser(
-        usage="git-dumper [options] URL DIR",
-        description="Dump a git repository from a website.",
+        usage="git_hacker.py URL DIR <args>",
+        description="Dump a git repository from a website and scan the dumped content.",
     )
     parser.add_argument("url", metavar="URL", help="url")
     parser.add_argument("directory", metavar="DIR", help="output directory")
